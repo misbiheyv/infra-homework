@@ -3,7 +3,7 @@ on: [push]
 jobs:
   # Dependencies installation
   dependencies:
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +18,7 @@ jobs:
   # Build project
   build:
     needs: dependencies
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
   # Run all linters
   linters:
     needs: dependencies
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -53,7 +53,7 @@ jobs:
   # Deploy project
   deploy:
     needs: build
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
