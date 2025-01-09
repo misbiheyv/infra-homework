@@ -44,15 +44,12 @@ jobs:
           node-version: 22.x
           cache: yarn
 
-      - name: Install dependencies
-        run: yarn install --immutable
-
-      - name: Run linter
-        run: yarn test:eslint
+      - run: yarn install --immutable
+      - run: yarn linters
 
   # Deploy project
   deploy:
-    needs: build
+    needs: [dependencies, build]
     runs-on: ubuntu-latest
 
     steps:
@@ -64,5 +61,4 @@ jobs:
           cache: yarn
 
       - run: yarn install --immutable
-      - run: yarn build
       - run: yarn deploy
