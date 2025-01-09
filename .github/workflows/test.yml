@@ -5,62 +5,43 @@ jobs:
   dependencies:
     runs-on: ubuntu-latests
 
-    strategy:
-      matrix:
-        node-version: [lts/*]
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
           cache: yarn
 
-      - name: Install dependencies
-        run: yarn install --immutable
+      - run: yarn install --immutable
 
   # Build project
   build:
     needs: dependencies
     runs-on: ubuntu-latests
 
-    strategy:
-      matrix:
-        node-version: [20.x]
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
           cache: yarn
 
-      - name: Install dependencies
-        run: yarn install --immutable
-
-      - name: Build project
-        run: yarn build
+      - run: yarn install --immutable
+      - run: yarn build
 
   # Run all linters
   linters:
     needs: dependencies
     runs-on: ubuntu-latests
 
-    strategy:
-      matrix:
-        node-version: [20.x]
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
           cache: yarn
 
       - name: Install dependencies
@@ -80,9 +61,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20.x
-          registry-url: https://registry.npmjs.org
           cache: yarn
 
-      - run: yarn install
+      - run: yarn install --immutable
       - run: yarn build
-      - run: echo package has been published
+      - run: yarn deploy
